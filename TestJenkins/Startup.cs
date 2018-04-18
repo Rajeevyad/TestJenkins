@@ -13,6 +13,7 @@ namespace TestJenkins
     {
         public Startup(IConfiguration configuration)
         {
+            // Testing Jenkins stuff
             Configuration = configuration;
         }
 
