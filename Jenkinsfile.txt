@@ -1,0 +1,8 @@
+pipeline {
+    agent any 
+   node {
+        stage('RUNNING POWERSHELL -- Cake Script') {
+             powershell '.\\build.ps1'
+        }
+    }
+}
