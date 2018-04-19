@@ -1,38 +1,10 @@
-node
-{
-    stage 'checkout'
-    try 
-    {
-        git credentialsId: '3babf1ce-a9d1-4111-9c65-4e09bbd12764', url: 'https://github.com/Rajeevyad/TestJenkins.git'
-
-        dir('TestJenkins') {
-        stage 'Restore, Build, Publish'
-         bat '''dotnet restore
-         dotnet build --configuration "Release"
-         dotnet publish --configuration "Release"'''
-      
-       stage 'RUN TEST CASES'
-         
-         stage 'Archiving'
-        archiveArtifacts 'Views/**'
-
+pipeline {
+    agent any 
+    stages {
+        stage('Stage 1') {
+            steps {
+                echo 'Hello world!' 
+            }
         }
-        
-      notify('SUCCESS')
-      
-    } catch (err) {
-        echo "Caught: ${err}"
-        currentBuild.result = 'FAILURE'
     }
 }
-
-def notify(status)
-{
-    node
-    {
-    echo "BuildNumber: ${BUILD_NUMBER} ---JOB NAME: ${JOB_NAME}"
-    }
-}
-
-
-
