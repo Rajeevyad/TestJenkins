@@ -1,8 +1,10 @@
 pipeline {
     agent any 
     stages {
-        stage('RUNNING POWERSHELL -- Cake Script') {
-             powershell '.\\build.ps1'
+        stage('Stage 1') {
+            steps {
+                  powershell '.\\build.ps1'
+            }
         }
     }
 }
