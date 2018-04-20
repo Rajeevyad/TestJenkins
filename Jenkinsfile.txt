@@ -1,8 +1,9 @@
 pipeline {
     agent any 
     stages {
-        stage('Stage 1') {
+        stage('Running PowerShell script............') {
             steps {
+                  echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                   powershell '.\\build.ps1'
             }
         }
