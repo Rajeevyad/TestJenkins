@@ -294,3 +294,5 @@ tools
 TestJenkins/obj/Debug/netcoreapp2.0/TestJenkins.csproj.CoreCompileInputs.cache
 TestJenkins/obj/Debug/netcoreapp2.0/TestJenkins.csprojResolveAssemblyReference.cache
 TestJenkins/obj/project.assets.json
+/TestJenkins/package-lock.json
+*.cache

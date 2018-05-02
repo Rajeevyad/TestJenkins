@@ -2,6 +2,7 @@
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
 #addin nuget:?package=Cake.Npm&version=0.13.0
+#tool nuget:?package=xunit.runner.console&version=2.2.0
 #tool nuget:?package=OpenCover&Version=4.6.519
 #tool nuget:?package=ReportGenerator&version=2.5.8
 
@@ -42,38 +43,61 @@ Task("NpmInstall")
 
 Task("Build")
     .Does(()=>{
-        DotNetBuild("TestJenkins/TestJenkins.csproj",
-        settings=>settings.SetConfiguration(configuration)
-                                        .WithTarget("Build"));
+        // DotNetBuild("TestJenkins/TestJenkins.csproj",
+        // settings=>settings.SetConfiguration(configuration).WithTarget("Build"));
+	  DotNetCoreBuild("TestJenkins.sln", new DotNetCoreBuildSettings
+		{
+			Configuration = configuration,
+			ArgumentCustomization = arg => arg.AppendSwitch("/p:DebugType","=","Full")
+		});
     });
 
 	Task("Test")
        .Does(() => 
        {
-        
-		FilePathCollection projects = GetFiles("./**/*.Test.csproj");
-        foreach (FilePath project in projects)
-        {
+
+		 var success = true;
+		 var openCoverSettings = new OpenCoverSettings
+		{
+			OldStyle = true,
+			MergeOutput = true
+		}
+		.WithFilter("+[*]*")
+		.WithFilter("-[FakeItEasy]*")
+		.WithFilter("-[*Test]*");
+
+ 		// foreach(var project in  GetFiles("./**/*.Test.csproj"))
+        // {
+            try 
+            {
+                // var projectFile = "TestJenkins/TestJenkins.csproj"; //MakeAbsolute(project).ToString();
+				Information("Testing {0}", "TestjenkinsTest/TestjenkinsTest.Test.csproj");
 				if (!DirectoryExists(coveragePath))
 				{
 					CreateDirectory(coveragePath);
 				}
 
-               OpenCover(tool=>tool.DotNetCoreTest(
-                project.FullPath,
-                new DotNetCoreTestSettings()
+                var dotNetTestSettings = new DotNetCoreTestSettings
                 {
                     Configuration = configuration,
                     NoBuild = true
-                }),
-                           coverageXml,
-                           new OpenCoverSettings()
-                           .WithFilter("+[TestJenkins.*]*")
-                           .WithFilter("-[TestJenkins.*Test*]*")
-                           );
-        }
-       });
+                };
 
+                OpenCover(context => context.DotNetCoreTest("TestjenkinsTest/TestjenkinsTest.Test.csproj", dotNetTestSettings), coverageXml, openCoverSettings);
+            }
+            catch(Exception ex)
+            {
+                success = false;
+                Error("There was an error while running the tests", ex);
+            }
+        //}
+
+		if(success == false)
+		{
+			throw new CakeException("There was an error while running the tests");
+		}
+		
+       });
 
 	   
 Task("Report-Coverage")
