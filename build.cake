@@ -100,7 +100,7 @@ Task("Build")
        });
 
 	   
-Task("Report-Coverage")
+Task("CodeCoverage")
        .Does(()=>
        {
              ReportGenerator(
@@ -139,8 +139,8 @@ Task("Default")
 	.IsDependentOn("NpmInstall")
 	.IsDependentOn("Build")
 	.IsDependentOn("Test")
-	.IsDependentOn("Report-Coverage");
-	// .IsDependentOn("PublishWeb");
+	.IsDependentOn("CodeCoverage");
+	.IsDependentOn("PublishWeb");
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION

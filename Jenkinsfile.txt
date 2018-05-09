@@ -22,18 +22,9 @@ node
         
     stage 'Build'
         powershell '.\\build.ps1 -Target Build'   
-    
-    stage 'Test'
-        powershell '.\\build.ps1 -Target Test'    
-		
-	stage 'CodeCoverage'
-        powershell '.\\build.ps1 -Target CodeCoverage' 
         
     stage 'PublishWeb'
         powershell '.\\build.ps1 -Target PublishWeb'
-    
-    stage 'PublishWeb-API'
-        powershell '.\\build.ps1 -Target PublishWeb-API'
         
     stage 'Docker'
          powershell '.\\dockercompose.ps1'
