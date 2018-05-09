@@ -1,6 +1,7 @@
 node
 {
     stage 'GitHub'
+	def app
     try 
     {
         echo 'Getting data from Github.........'
@@ -28,6 +29,15 @@ node
         
     stage 'Docker'
          powershell '.\\dockercompose.ps1'
+
+	stage('Docker Push') {
+      agent any
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'Docker_Hub_Credentials', passwordVariable: 'Docker_Hub_CredentialsPassword', usernameVariable: 'Docker_Hub_CredentialsUser')]) {
+          bat 'docker login -u ${env.Docker_Hub_CredentialsUser} -p ${env.Docker_Hub_CredentialsPassword}'
+          bat 'docker push rajeevyad/testjenkins:latest'
+        }
+      }
     
     notify('BUILD SUCCESSFUL')     
 }
