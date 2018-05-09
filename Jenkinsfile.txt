@@ -1,11 +1,51 @@
-pipeline {
-    agent any 
-    stages {
-        stage('Running PowerShell script............') {
-            steps {
-                  echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                  powershell '.\\build.ps1'
-            }
-        }
+node
+{
+    stage 'GitHub'
+    try 
+    {
+        echo 'Getting data from Github.........'
+        git 'https://github.com/Rajeevyad/TestJenkins.git'
+      
+    } catch (err) {
+        echo "Caught: ${err}"
+        currentBuild.result = 'FAILURE'
+    }
+    
+    stage 'Clean'
+        powershell '.\\build.ps1 -Target Clean'
+        
+    stage 'Restore'
+        powershell '.\\build.ps1 -Target Restore'   
+    
+    stage 'NpmInstall'
+        powershell '.\\build.ps1 -Target NpmInstall'    
+        
+    stage 'Build'
+        powershell '.\\build.ps1 -Target Build'   
+    
+    stage 'Test'
+        powershell '.\\build.ps1 -Target Test'    
+		
+	stage 'CodeCoverage'
+        powershell '.\\build.ps1 -Target CodeCoverage' 
+        
+    stage 'PublishWeb'
+        powershell '.\\build.ps1 -Target PublishWeb'
+    
+    stage 'PublishWeb-API'
+        powershell '.\\build.ps1 -Target PublishWeb-API'
+        
+    stage 'Docker'
+         powershell '.\\dockercompose.ps1'
+    
+    notify('BUILD SUCCESSFUL')     
+}
+
+
+def notify(status)
+{
+    node
+    {
+     echo "BuildNumber: ${BUILD_NUMBER} ----JOB NAME: ${JOB_NAME}"
     }
 }
