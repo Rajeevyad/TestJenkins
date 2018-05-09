@@ -137,10 +137,10 @@ Task("Default")
 	.IsDependentOn("Clean")
 	.IsDependentOn("Restore")
 	.IsDependentOn("NpmInstall")
-	.IsDependentOn("Build")
-	.IsDependentOn("Test")
-	.IsDependentOn("CodeCoverage");
+	.IsDependentOn("Build")	
 	.IsDependentOn("PublishWeb");
+	// .IsDependentOn("Test")
+	// .IsDependentOn("CodeCoverage")
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
