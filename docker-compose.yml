@@ -3,8 +3,6 @@ version: '3'
 services:
   testjenkins:
     image: testjenkins
-     ports:
-      - 2684:80
     build:
       context: .
       dockerfile: TestJenkins\Dockerfile
