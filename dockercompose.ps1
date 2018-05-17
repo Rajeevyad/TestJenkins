@@ -14,5 +14,5 @@ Write-Host "Build and run docker container........."
 docker-compose -f docker-compose.yml -f docker-compose.override.yml up --build -d
 
 Write-Host "Tagging Image........."
-docker tag testjenkins:latest images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:latest
+docker tag testjenkins:latest images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:${BUILD_NUMBER}
 

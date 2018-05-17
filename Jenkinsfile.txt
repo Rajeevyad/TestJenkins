@@ -35,7 +35,7 @@ node
 	{
         withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: 'https://images.tooling.lm-core-platform.com:443']) 
 		{
- 			bat 'docker push images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:latest'
+ 			bat 'docker push images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:${BUILD_NUMBER}'
 		}
      }
 	 catch (err) {
