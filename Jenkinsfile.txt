@@ -1,18 +1,5 @@
 node
-{
-    stage 'GitHub'
-	def app
-    try 
-    {
-        echo 'Getting data from Github.........'
-        git 'https://github.com/Rajeevyad/TestJenkins.git'
-      
-    } catch (err) {
-        echo "Caught: ${err}"
-        currentBuild.result = 'FAILURE'
-    }
-    
-    
+{  
 	stage('Docker Push')
 	try
 	{
@@ -21,10 +8,11 @@ node
  		  bat "docker login -u ${env.Docker_Nexus_CredentialsUser} -p ${env.Docker_Nexus_CredentialsPassword}  images.tooling.lm-core-platform.com:443"
 		}
      }
-	 catch (err) {
+	 catch (err) 
+	 {
         echo "Caught: ${err}"
         currentBuild.result = 'FAILURE'
-    }
+	}
     
     notify('BUILD SUCCESSFUL')     
 }
