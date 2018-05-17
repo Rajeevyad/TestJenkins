@@ -21,7 +21,7 @@ node
 		  // some block
 		  echo "${env.Docker_Nexus_CredentialsUser}"
 		   echo "${env.Docker_Nexus_CredentialsPassword}"
- 		  bat "docker login -u ${env.Docker_Nexus_CredentialsUser} -p ${env.Docker_Nexus_CredentialsPassword}"
+ 		  bat "docker login -u ${env.Docker_Nexus_CredentialsUser} -p ${env.Docker_Nexus_CredentialsPassword}" images.tooling.lm-core-platform.com:443
 		}
      }
 	 catch (err) {
