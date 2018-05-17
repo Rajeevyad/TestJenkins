@@ -15,7 +15,7 @@ node
 		withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: 'https://images.tooling.lm-core-platform.com:443']) 
 		{
  			bat "docker push images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:${env.BUILD_NUMBER}"
-			docker logout https://images.tooling.lm-core-platform.com:443
+			bat "docker logout https://images.tooling.lm-core-platform.com:443"
 		}
 
      }
