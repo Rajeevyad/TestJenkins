@@ -17,7 +17,7 @@ node
           bat "docker login -u ${env.Docker_Nexus_CredentialsUser} -p ${env.Docker_Nexus_CredentialsPassword}  ${url}"           
         }
 
-		withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: ${url}]) 
+		withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: "${url}"]) 
 		{
  			bat "docker push ${repository}/lmproptreatypro/testjenkins:${env.BUILD_NUMBER}"
 			echo "LOG OUT into NEXUS"
