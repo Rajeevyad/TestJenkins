@@ -19,7 +19,8 @@ node
 	try
 	{
 		echo "TAGGING IMAGES"
-		bat 'docker tag testjenkins:latest images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:"${BUILD_NUMBER}"'
+		echo "${BUILD_NUMBER}"
+		docker tag testjenkins:latest images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:"${BUILD_NUMBER}"
 
         withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: 'https://images.tooling.lm-core-platform.com:443']) 
 		{
