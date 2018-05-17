@@ -8,11 +8,11 @@ node
 
         git 'https://github.com/Rajeevyad/TestJenkins.git'
 
-	    echo "${env.GIT_BRANCH}"
-		echo "${env.GIT_COMMIT}"
-		echo "${env.GIT_PREVIOUS_COMMIT}"
-		echo "${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
-		echo "${env.GIT_URL}"
+	    echo "${GIT_BRANCH}"
+		echo "${GIT_COMMIT}"
+		echo "${GIT_PREVIOUS_COMMIT}"
+		echo "${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+		echo "${GIT_URL}"
       
     } catch (err) {
         echo "Caught: ${err}"
