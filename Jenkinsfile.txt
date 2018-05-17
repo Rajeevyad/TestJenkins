@@ -11,28 +11,16 @@ node
         echo "Caught: ${err}"
         currentBuild.result = 'FAILURE'
     }
-    
-    stage 'Clean'
-        powershell '.\\build.ps1 -Target Clean'
         
-    stage 'Restore'
-        powershell '.\\build.ps1 -Target Restore'   
-    
-    stage 'NpmInstall'
-        powershell '.\\build.ps1 -Target NpmInstall'    
-        
-    stage 'Build'
-        powershell '.\\build.ps1 -Target Build'   
-        
-    stage 'PublishWeb'
-        powershell '.\\build.ps1 -Target PublishWeb'
-        
-    stage 'Docker'
+    stage 'Docker Build'
          powershell '.\\dockercompose.ps1'
 
 	stage('Docker Push')
 	try
 	{
+		echo "TAGGING IMAGES"
+		bat 'docker tag testjenkins:latest images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:${BUILD_NUMBER}'
+
         withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: 'https://images.tooling.lm-core-platform.com:443']) 
 		{
  			bat 'docker push images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:${BUILD_NUMBER}'
