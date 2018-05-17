@@ -1,11 +1,41 @@
 node
 {  
+  stage 'GitHub'
+	def app
+    try 
+    {
+        echo 'Getting data from Github.........'
+        git 'https://github.com/Rajeevyad/TestJenkins.git'
+      
+    } catch (err) {
+        echo "Caught: ${err}"
+        currentBuild.result = 'FAILURE'
+    }
+    
+    stage 'Clean'
+        powershell '.\\build.ps1 -Target Clean'
+        
+    stage 'Restore'
+        powershell '.\\build.ps1 -Target Restore'   
+    
+    stage 'NpmInstall'
+        powershell '.\\build.ps1 -Target NpmInstall'    
+        
+    stage 'Build'
+        powershell '.\\build.ps1 -Target Build'   
+        
+    stage 'PublishWeb'
+        powershell '.\\build.ps1 -Target PublishWeb'
+        
+    stage 'Docker'
+         powershell '.\\dockercompose.ps1'
+
 	stage('Docker Push')
 	try
 	{
 		withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: 'https://images.tooling.lm-core-platform.com:443']) 
 		{
- 		  bat "docker login -u ${env.Docker_Nexus_CredentialsUser} -p ${env.Docker_Nexus_CredentialsPassword}  images.tooling.lm-core-platform.com:443"
+ 		  docker push images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:latest
 		}
      }
 	 catch (err) 
