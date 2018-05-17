@@ -33,7 +33,7 @@ node
 	stage('Docker Push')
 	try
 	{
-		withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: 'images.tooling.lm-core-platform.com:443']) 
+		withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: 'https://images.tooling.lm-core-platform.com:443']) 
 		{
 		  // some block
  		  bat "docker login -u ${env.Docker_Nexus_CredentialsUser} -p ${env.Docker_Nexus_CredentialsPassword}"
