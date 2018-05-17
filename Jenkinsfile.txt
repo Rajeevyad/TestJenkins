@@ -9,12 +9,14 @@ node
 
 		withCredentials([usernamePassword(credentialsId: 'Docker_Nexus_Credentials', passwordVariable: 'Docker_Nexus_CredentialsPassword', usernameVariable: 'Docker_Nexus_CredentialsUser')]) 
 		{
-          bat "docker login -u ${env.Docker_Hub_CredentialsUser} -p ${env.Docker_Hub_CredentialsPassword}  https://images.tooling.lm-core-platform.com:443"           
+			echo "Loggin into NEXUS"
+          bat "docker login -u ${env.Docker_Nexus_CredentialsUser} -p ${env.Docker_Nexus_CredentialsPassword}  https://images.tooling.lm-core-platform.com:443"           
         }
 
 		withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: 'https://images.tooling.lm-core-platform.com:443']) 
 		{
  			bat "docker push images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:${env.BUILD_NUMBER}"
+			echo "LOG OUT into NEXUS"
 			bat "docker logout https://images.tooling.lm-core-platform.com:443"
 		}
 
