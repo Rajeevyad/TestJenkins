@@ -33,11 +33,11 @@ node
 	stage('Docker Push')
 	try
 	{
-        withCredentials([usernamePassword(credentialsId: 'Docker_Hub_Credentials', passwordVariable: 'Docker_Hub_CredentialsPassword', usernameVariable: 'Docker_Hub_CredentialsUser')]) 
+		withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: 'images.tooling.lm-core-platform.com:443']) 
 		{
-          bat "docker login -u ${env.Docker_Hub_CredentialsUser} -p ${env.Docker_Hub_CredentialsPassword}"
-          bat "docker push rajeevyad/testjenkins:latest"
-        }
+		  // some block
+ 		  bat "docker login -u ${env.Docker_Nexus_CredentialsUser} -p ${env.Docker_Nexus_CredentialsPassword}"
+		}
      }
 	 catch (err) {
         echo "Caught: ${err}"
