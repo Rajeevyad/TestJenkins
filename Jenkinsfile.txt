@@ -1,24 +1,28 @@
 node
 {
-    stage 'GitHub'
-	def app
-    try 
-    {
-        echo 'Getting data from Github.........'
+	stage('Docker Push')
+	try
+	{
+		echo "TAGGING IMAGES"
+		echo "${env.BUILD_NUMBER}"
+		bat  "docker tag testjenkins:latest images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:${env.BUILD_NUMBER}"
 
-        git 'https://github.com/Rajeevyad/TestJenkins.git'
+		withCredentials([usernamePassword(credentialsId: 'Docker_Nexus_Credentials', passwordVariable: 'Docker_Nexus_CredentialsPassword', usernameVariable: 'Docker_Nexus_CredentialsUser')]) 
+		{
+          bat "docker login -u ${env.Docker_Hub_CredentialsUser} -p ${env.Docker_Hub_CredentialsPassword}  https://images.tooling.lm-core-platform.com:443"           
+        }
 
-	    echo "${env.GIT_BRANCH}"
-		echo "${env.GIT_COMMIT}"
-		echo "${env.GIT_PREVIOUS_COMMIT}"
-		echo "${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
-		echo "${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
-      
-    } catch (err) {
+		withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: 'https://images.tooling.lm-core-platform.com:443']) 
+		{
+ 			bat "docker push images.tooling.lm-core-platform.com:443/lmproptreatypro/testjenkins:${env.BUILD_NUMBER}"
+			docker logout https://images.tooling.lm-core-platform.com:443
+		}
+
+     }
+	 catch (err) {
         echo "Caught: ${err}"
         currentBuild.result = 'FAILURE'
-    }   
-
+    }
     
     notify('BUILD SUCCESSFUL')     
 }
