@@ -1,6 +1,35 @@
 node
 {
-	
+    stage 'GitHub'
+	def app
+    try 
+    {
+        echo 'Getting data from Github.........'
+        git 'https://github.com/Rajeevyad/TestJenkins.git'
+      
+    } catch (err) {
+        echo "Caught: ${err}"
+        currentBuild.result = 'FAILURE'
+    }
+    
+    stage 'Clean'
+        powershell '.\\build.ps1 -Target Clean'
+        
+    stage 'Restore'
+        powershell '.\\build.ps1 -Target Restore'   
+    
+    stage 'NpmInstall'
+        powershell '.\\build.ps1 -Target NpmInstall'    
+        
+    stage 'Build'
+        powershell '.\\build.ps1 -Target Build'   
+        
+    stage 'PublishWeb'
+        powershell '.\\build.ps1 -Target PublishWeb'
+        
+    stage 'Docker Build'
+         powershell '.\\dockercompose.ps1'
+
 	stage('Docker Push')
 	try
 	{
@@ -23,7 +52,6 @@ node
 			echo "LOG OUT into NEXUS"
 			bat "docker logout ${url}"
 		}
-
      }
 	 catch (err) {
         echo "Caught: ${err}"
