@@ -4,10 +4,12 @@ node
 	stage('Docker Push')
 	try
 	{
-	   def url = 'https://images.tooling.lm-core-platform.com:443'
+	    def url = 'https://images.tooling.lm-core-platform.com:443'
+		def repository = 'images.tooling.lm-core-platform.com:443'
+
 		echo "TAGGING IMAGES"
 		echo "${env.BUILD_NUMBER}"
-		bat  "docker tag testjenkins:latest ${url}/lmproptreatypro/testjenkins:${env.BUILD_NUMBER}"
+		bat  "docker tag testjenkins:latest ${repository}/lmproptreatypro/testjenkins:${env.BUILD_NUMBER}"
 
 		withCredentials([usernamePassword(credentialsId: 'Docker_Nexus_Credentials', passwordVariable: 'Docker_Nexus_CredentialsPassword', usernameVariable: 'Docker_Nexus_CredentialsUser')]) 
 		{
@@ -17,7 +19,7 @@ node
 
 		withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: ${url}]) 
 		{
- 			bat "docker push ${url}/lmproptreatypro/testjenkins:${env.BUILD_NUMBER}"
+ 			bat "docker push ${repository}/lmproptreatypro/testjenkins:${env.BUILD_NUMBER}"
 			echo "LOG OUT into NEXUS"
 			bat "docker logout ${url}"
 		}
