@@ -19,8 +19,8 @@ node
 		withDockerRegistry([credentialsId: 'Docker_Nexus_Credentials', url: 'https://images.tooling.lm-core-platform.com:443']) 
 		{
 		  // some block
-		  echo ${env.Docker_Nexus_CredentialsUser}
-		   echo ${env.Docker_Nexus_CredentialsPassword}
+		  echo "${env.Docker_Nexus_CredentialsUser}"
+		   echo "${env.Docker_Nexus_CredentialsPassword}"
  		  bat "docker login -u ${env.Docker_Nexus_CredentialsUser} -p ${env.Docker_Nexus_CredentialsPassword}"
 		}
      }
