@@ -1,16 +1,20 @@
 node
 {
     stage 'GitHub'
-	def app
-    try 
-    {
+	{
+	 steps {
+	 def app
+       try 
+       {
         echo 'Getting data from Github.........'
         git 'https://github.com/Rajeevyad/TestJenkins.git'
       
-    } catch (err) {
+       } catch (err) {
         echo "Caught: ${err}"
         currentBuild.result = 'FAILURE'
-    }
+      }
+	 }
+	}
     
     stage 'Clean'
         powershell '.\\build.ps1 -Target Clean'
@@ -28,7 +32,21 @@ node
         powershell '.\\build.ps1 -Target PublishWeb'
         
     stage 'Docker Build'
-         powershell '.\\dockercompose.ps1'
+	    echo "Stopping all container"
+        bat  "docker stop $(docker ps -aq)"
+
+		echo "Removing all container"
+		bat  "docker rm $(docker ps -aq)"
+
+		echo "Removing testjenkins image"
+		bat  "docker rmi -f $(docker images testjenkins -q)"
+
+		echo "Check config"
+		bat  "docker-compose -f docker-compose.yml -f docker-compose.override.yml config"
+
+		echo "Build and run docker container"
+		bat  "docker-compose -f docker-compose.yml -f docker-compose.override.yml up --build -d"
+
 
 	stage('Docker Push')
 	try
