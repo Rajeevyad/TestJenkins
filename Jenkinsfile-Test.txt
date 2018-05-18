@@ -8,6 +8,10 @@ node
         git 'https://github.com/Rajeevyad/TestJenkins.git'
 		scmVars = checkout scm
 		echo scmVars.GIT_BRANCH
+		echo scmVars.GIT_COMMIT
+		echo scmVars.GIT_PREVIOUS_COMMIT
+		echo scmVars.GIT_PREVIOUS_SUCCESSFUL_COMMIT
+		echo scmVars.GIT_URL
 
       
     } catch (err) {
