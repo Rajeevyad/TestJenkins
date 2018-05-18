@@ -6,9 +6,8 @@ node
     {
         echo 'Getting data from Github.........'
         git 'https://github.com/Rajeevyad/TestJenkins.git'
-		 def allbranches = scm.branches
-		 def gitBranch = scm.branches[0].name
-		 echo gitBranch
+		scmVars = checkout scm
+		echo scmVars.GIT_BRANCH
 
       
     } catch (err) {
