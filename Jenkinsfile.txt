@@ -1,20 +1,16 @@
 node
 {
-    stage 'GitHub'
-	{
-	 steps {
+    stage 'GitHub'	
 	 def app
-       try 
-       {
+     try 
+     {
         echo 'Getting data from Github.........'
         git 'https://github.com/Rajeevyad/TestJenkins.git'
       
-       } catch (err) {
+     } catch (err) {
         echo "Caught: ${err}"
         currentBuild.result = 'FAILURE'
-      }
-	 }
-	}
+      }	
     
     stage 'Clean'
         powershell '.\\build.ps1 -Target Clean'
