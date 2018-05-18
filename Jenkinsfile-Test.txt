@@ -1,0 +1,29 @@
+node
+{
+    stage 'GitHub'
+	def app
+    try 
+    {
+        echo 'Getting data from Github.........'
+        git 'https://github.com/Rajeevyad/TestJenkins.git'
+		 def allbranches = scm.branches
+		 def gitBranch = scm.branches[0].name
+		 echo gitBranch
+
+      
+    } catch (err) {
+        echo "Caught: ${err}"
+        currentBuild.result = 'FAILURE'
+    }
+
+    notify('BUILD SUCCESSFUL')     
+}
+
+
+def notify(status)
+{
+    node
+    {
+     echo "BuildNumber: ${BUILD_NUMBER} ----JOB NAME: ${JOB_NAME}"
+    }
+}
