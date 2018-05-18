@@ -29,19 +29,19 @@ node
         
     stage 'Docker Build'
 	    echo "Stopping all container"
-        powershell  "docker stop $(docker ps -aq)"
+        bat  'docker stop $(docker ps -aq)'
 
 		echo "Removing all container"
-		powershell  "docker rm $(docker ps -aq)"
+		bat  'docker rm $(docker ps -aq)'
 
 		echo "Removing testjenkins image"
-		powershell  "docker rmi -f $(docker images testjenkins -q)"
+		bat  'docker rmi -f $(docker images testjenkins -q)'
 
 		echo "Check config"
-		powershell  "docker-compose -f docker-compose.yml -f docker-compose.override.yml config"
+		bat  'docker-compose -f docker-compose.yml -f docker-compose.override.yml config'
 
 		echo "Build and run docker container"
-		powershell  "docker-compose -f docker-compose.yml -f docker-compose.override.yml up --build -d"
+		bat  'docker-compose -f docker-compose.yml -f docker-compose.override.yml up --build -d'
 
 
 	stage('Docker Push')
