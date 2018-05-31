@@ -28,15 +28,24 @@ node
         powershell '.\\build.ps1 -Target PublishWeb'
         
     stage 'Docker Build'
-	    echo "Stopping all container"
-        powershell  'docker stop $(docker ps -aq)'
+	 try
+	    {
+	    echo "Stopping & Removing all container"
+        powershell 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=testjenkins --format="{{.ID}}"))'
+		} 
+        catch (err) {
+            echo "Caught: ${err}"
+        }
 
 		echo "Removing all container"
-		powershell  'docker rm $(docker ps -aq)'
-
-		echo "Removing testjenkins image"
-		powershell  'docker rmi -f $(docker images testjenkins -q)'
-
+		 try
+	    {
+		 powershell  'docker rmi -f $(docker images testjenkins -q)'
+		 } 
+        catch (err) {
+            echo "Caught: ${err}"
+        }  
+		
 		echo "Check config"
 		powershell  'docker-compose -f docker-compose.yml -f docker-compose.override.yml config'
 
