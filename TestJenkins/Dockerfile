@@ -1,4 +1,4 @@
-FROM docker pull microsoft/aspnetcore-build
+FROM microsoft/aspnetcore-build
 LABEL multi.label1="value1"
 WORKDIR /app
 EXPOSE 80
