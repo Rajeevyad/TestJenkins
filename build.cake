@@ -32,7 +32,7 @@ Task("Clean")
 
 Task("Restore")
     .Does(()=>{
-            NuGetRestore("TestJenkins.sln");
+            DotNetCoreRestore("TestJenkins.sln");
         });
 
 Task("NpmInstall")
