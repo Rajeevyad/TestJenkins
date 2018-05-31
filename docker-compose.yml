@@ -6,3 +6,5 @@ services:
     build:
       context: .
       dockerfile: ./TestJenkins/Dockerfile
+      args:
+        version: 1.0
