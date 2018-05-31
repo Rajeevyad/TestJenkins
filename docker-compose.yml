@@ -5,4 +5,4 @@ services:
     image: testjenkins
     build:
       context: .
-      dockerfile: TestJenkins\Dockerfile
+      dockerfile: ./TestJenkins\Dockerfile
