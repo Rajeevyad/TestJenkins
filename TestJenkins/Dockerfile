@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore-build:2.0-nanoserver-sac2016
+FROM docker pull microsoft/aspnetcore-build
 LABEL multi.label1="value1"
 WORKDIR /app
 EXPOSE 80
