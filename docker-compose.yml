@@ -3,6 +3,11 @@ version: '3'
 services:
   testjenkins:
     image: testjenkins
+    networks:
+      - zservices_default
     build:
       context: .
       dockerfile: ./TestJenkins/Dockerfile
+networks:
+  zservices_default:
+    external: true  
