@@ -49,9 +49,8 @@ node
 		echo "Check config"
 		powershell  'docker-compose -f docker-compose.yml -f docker-compose.override.yml config'
 
-		echo "Build and run docker container"		
-		 powershell  'docker build TestJenkins --build-arg version=${env.BUILD_NUMBER}'
-		
+		echo "Build and run docker container"
+		powershell  'docker-compose -f docker-compose.yml -f docker-compose.override.yml up --build --no-cache  -d'
 
 
 	stage('Docker Push')
