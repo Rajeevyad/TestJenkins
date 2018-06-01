@@ -36,7 +36,7 @@ node
 		powershell  'docker-compose -f docker-compose.yml -f docker-compose.override.yml config'
 
 		echo "Build and run docker container"
-		powershell  'docker build TestJenkins --build-arg labelversion=${env.BUILD_NUMBER} -t testjenkins'
+		powershell  "docker build TestJenkins --build-arg labelversion=${env.BUILD_NUMBER} -t testjenkins"
 
 
 	stage('Docker Push')
