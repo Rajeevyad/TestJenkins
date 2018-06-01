@@ -10,23 +10,8 @@ node
      } catch (err) {
         echo "Caught: ${err}"
         currentBuild.result = 'FAILURE'
-      }	
-	      
-     stage 'Clean'
-        powershell '.\\build.ps1 -Target Clean'
-        
-    stage 'Restore'
-        powershell '.\\build.ps1 -Target Restore'   
-    
-    stage 'NpmInstall'
-        powershell '.\\build.ps1 -Target NpmInstall'    
-        
-    stage 'Build'
-        powershell '.\\build.ps1 -Target Build'   
-        
-    stage 'PublishWeb'
-        powershell '.\\build.ps1 -Target PublishWeb'    
-       
+      }		      
+      
     stage 'Docker Build'
 	 try
 	    {
