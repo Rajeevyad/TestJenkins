@@ -10,8 +10,22 @@ node
      } catch (err) {
         echo "Caught: ${err}"
         currentBuild.result = 'FAILURE'
-      }	    
+      }	
     
+    stage 'Clean'
+        powershell '.\\build.ps1 -Target Clean'
+        
+    stage 'Restore'
+        powershell '.\\build.ps1 -Target Restore'   
+    
+    stage 'NpmInstall'
+        powershell '.\\build.ps1 -Target NpmInstall'    
+        
+    stage 'Build'
+        powershell '.\\build.ps1 -Target Build'   
+        
+    stage 'PublishWeb'
+        powershell '.\\build.ps1 -Target PublishWeb'
         
     stage 'Docker Build'
 	 try
@@ -36,7 +50,7 @@ node
 		powershell  'docker-compose -f docker-compose.yml -f docker-compose.override.yml config'
 
 		echo "Build and run docker container"
-		powershell  'docker build TestJenkins  --build-arg labelversion=2.0'
+		powershell  'docker build TestJenkins --build-arg labelversion="2.0"'
 
 
 	stage('Docker Push')

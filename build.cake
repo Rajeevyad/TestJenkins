@@ -9,7 +9,7 @@
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 
-var distDirectory = Directory("./dist/portal"); 
+var distDirectory = Directory("./TestJenkins/bin/dist/portal"); 
 var coveragePath = Directory(distDirectory) + Directory("Coverage");
 var coverageXml = coveragePath + File("Coverage.xml");
 

@@ -3,6 +3,6 @@ ARG labelversion
 LABEL labelversion $labelversion
 WORKDIR /app
 EXPOSE 80
-COPY dist/portal portal/
+COPY ./bin/dist/portal portal/
 WORKDIR /app/portal
 ENTRYPOINT ["dotnet", "TestJenkins.dll"]
