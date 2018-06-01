@@ -1,5 +1,5 @@
-ARG labelversion
 FROM microsoft/aspnetcore-build
+ARG labelversion
 LABEL labelversion $labelversion
 WORKDIR /app
 EXPOSE 80
