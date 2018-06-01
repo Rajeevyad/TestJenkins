@@ -51,7 +51,7 @@ node
 
 		echo "Build and run docker container"
 		dir('TestJenkins') {
-			powershell  'docker build . --build-arg version=${env.BUILD_NUMBER} -d'
+			powershell  'docker build . --build-arg version=${env.BUILD_NUMBER}'
 		}
 
 
