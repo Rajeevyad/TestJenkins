@@ -3,6 +3,6 @@ FROM microsoft/aspnetcore-build
 LABEL labelversion $labelversion
 WORKDIR /app
 EXPOSE 80
-COPY ./portal portal/
+COPY ./TestJenkins/TestJenkins/portal portal/
 WORKDIR /app/portal
 ENTRYPOINT ["dotnet", "TestJenkins.dll"]
