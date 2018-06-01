@@ -7,4 +7,4 @@ services:
       context: .
       dockerfile: ./TestJenkins/Dockerfile
       args:
-        version: 1.0
+        labelversion: 1.0

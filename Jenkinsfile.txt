@@ -50,7 +50,7 @@ node
 		powershell  'docker-compose -f docker-compose.yml -f docker-compose.override.yml config'
 
 		echo "Build and run docker container"
-		powershell  'docker-compose -f docker-compose.yml -f docker-compose.override.yml --build --build-arg version=2.0'
+		powershell  'docker build TestJenkins  --build-arg labelversion=2.0'
 
 
 	stage('Docker Push')
