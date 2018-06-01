@@ -1,6 +1,6 @@
 ARG version
 FROM microsoft/aspnetcore-build
-LABEL multi.label1=$version
+LABEL version=$version
 WORKDIR /app
 EXPOSE 80
 COPY ./dist/portal portal/
