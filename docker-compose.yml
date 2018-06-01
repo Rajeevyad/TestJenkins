@@ -5,6 +5,6 @@ services:
     image: testjenkins
     build:
       context: .
-      dockerfile: ./TestJenkins/Dockerfile
+      dockerfile: Dockerfile
       args:
         labelversion: 1.0
